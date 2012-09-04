@@ -1,0 +1,30 @@
+﻿@model Simple.AplicationAdmin.Models.ApplicationTenantsModel
+@{
+    ViewBag.Title = "Tenants";
+}
+
+<h2>@Model.ApplicationName Tenants</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Url</th>
+            <th>Active?</th>
+            <th>Contracted?</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var tenant in Model.Tenants)
+        {
+            <tr>
+                <td>@tenant.Name</td>
+                <td>@tenant.Url</td>
+                <td>@tenant.IsActive @((tenant.IsActive? Html.ActionLink("Deactivate", "DeactivateTenant",new{name=tenant.Name, applicationName=Model.ApplicationName}):Html.ActionLink("Activate", "ActivateTenant",new{name=tenant.Name, applicationName=Model.ApplicationName})))</td>
+                <td>@tenant.InContract</td>
+                <td>@Html.ActionLink("Details","TenantDetails",new{name=tenant.Name, applicationName=Model.ApplicationName})</td>
+            
+            </tr>
+        }
+    </tbody>
+</table>

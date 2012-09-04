@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Simple.ApplicationAdmin.Contracts.ApplicationInfo>
+@{
+    ViewBag.Title = "Applications";
+}
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+                <h2>@ViewBag.Message</h2>
+            </hgroup>
+            <p>
+            </p>
+        </div>
+    </section>
+}
+<h3>Applications:</h3>
+<ul>
+    @foreach(var application in Model){
+    <li>
+        <h4>@application.Name</h4>
+        <h5>Tenants: @application.TenantsCount</h5>
+        <br />
+        @Html.ActionLink("Tenants", "Tenants", "Application", new { applicationName = application.Name }, null)
+    </li>
+    }
+</ul>

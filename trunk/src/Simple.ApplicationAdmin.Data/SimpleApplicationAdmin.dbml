@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="Simple.ApplicationAdmin" Class="SimpleApplicationAdminDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQL2012;Initial Catalog=Simple.ApplicationAdmin;Integrated Security=True" SettingsObjectName="Simple.ApplicationAdmin.Data.Properties.Settings" SettingsPropertyName="Simple_ApplicationAdminConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Application" Member="Applications">
+    <Type Name="Application">
+      <Column Name="Name" Type="System.String" DbType="NVarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="CreatedAt" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Application_ApplicationTenant" Member="ApplicationTenants" ThisKey="Name" OtherKey="Application" Type="ApplicationTenant" />
+    </Type>
+  </Table>
+  <Table Name="dbo.ApplicationTenant" Member="ApplicationTenants">
+    <Type Name="ApplicationTenant">
+      <Column Name="Application" Type="System.String" DbType="NVarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="TenantName" Type="System.String" DbType="NVarChar(100) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Url" Type="System.String" DbType="NVarChar(300) NOT NULL" CanBeNull="false" />
+      <Column Name="IsActive" Type="System.Boolean" DbType="Bit NOT NULL" CanBeNull="false" />
+      <Column Name="DatabaseConfiguration" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ApplicationConfiguration" Type="System.Xml.Linq.XElement" DbType="Xml" CanBeNull="true" UpdateCheck="Never" />
+      <Column Name="ContractStartedAt" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="GrossMonthly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Column Name="NetMonthly" Type="System.Double" DbType="Float" CanBeNull="true" />
+      <Association Name="Application_ApplicationTenant" Member="Application1" ThisKey="Application" OtherKey="Name" Type="Application" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>

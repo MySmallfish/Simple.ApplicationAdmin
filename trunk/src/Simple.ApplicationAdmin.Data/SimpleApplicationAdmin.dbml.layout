@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="SimpleApplicationAdmin">
+  <DataContextMoniker Name="/SimpleApplicationAdminDataContext" />
+  <nestedChildShapes>
+    <classShape Id="dc7c64e1-da5d-43c8-b61d-f6ba0240dc28" absoluteBounds="4.25, 1.375, 2, 1.1939925130208333">
+      <DataClassMoniker Name="/SimpleApplicationAdminDataContext/Application" />
+      <nestedChildShapes>
+        <elementListCompartment Id="6834a9c5-78cd-4702-96a3-324d79fd7425" absoluteBounds="4.265, 1.835, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <classShape Id="d793b766-212b-4dbe-8362-570e680dc52f" absoluteBounds="7.125, 2.25, 2, 2.5401025390625">
+      <DataClassMoniker Name="/SimpleApplicationAdminDataContext/ApplicationTenant" />
+      <nestedChildShapes>
+        <elementListCompartment Id="923f8cf0-466e-4e0e-9427-cda5a4153405" absoluteBounds="7.14, 2.71, 1.9700000000000002, 1.9801025390625" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+      </nestedChildShapes>
+    </classShape>
+    <associationConnector edgePoints="[(6.25 : 1.8124995); (8.125 : 1.8124995); (8.125 : 2.25)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/SimpleApplicationAdminDataContext/Application/Application_ApplicationTenant" />
+      <nodes>
+        <classShapeMoniker Id="dc7c64e1-da5d-43c8-b61d-f6ba0240dc28" />
+        <classShapeMoniker Id="d793b766-212b-4dbe-8362-570e680dc52f" />
+      </nodes>
+    </associationConnector>
+  </nestedChildShapes>
+</ordesignerObjectsDiagram>

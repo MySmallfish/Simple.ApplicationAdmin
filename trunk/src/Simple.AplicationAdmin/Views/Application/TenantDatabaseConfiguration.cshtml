@@ -1,0 +1,41 @@
+﻿@model Simple.AplicationAdmin.Models.TenantDetailsModel
+
+@{
+    ViewBag.Title = "Tenant Database Configuration";
+}
+
+<h2>Tenant Database Configuration</h2>
+<h3>Add New</h3>
+@using (Html.BeginForm("AddTenantDatabaseConfiguration","Application",new {Model.ApplicationName, Model.Name}))
+{
+    <fieldset>
+        <legend>New Configuration</legend>
+        <label for="configurationInfo.Name">Name</label>
+        @Html.TextBox("configurationInfo.Name", "")
+        <br/>
+        <label for="ConnectionString">Connection String</label>
+        @Html.TextBox("configurationInfo.ConnectionString", "")
+        <br/>
+        <label for="configurationInfo.ProviderName">Provider Name</label>
+        @Html.TextBox("configurationInfo.ProviderName","")
+        <br/>
+        <input type="submit" value="Save"/>
+    </fieldset>
+}
+
+<h3>Existing Configurations</h3>
+<ul>
+    @foreach(var item in Model.Connections)
+    {
+        <li>
+            <h5>@item.Name</h5>
+            <div>@item.ConnectionString, @item.ProviderName</div>
+            @using (Html.BeginForm("DeleteTenantDatabaseConfiguration", "Application", new{Model.ApplicationName, Model.Name, ConfigurationName = item.Name }))
+            {
+                <input type="submit" value="Delete"/>
+            }
+        </li>
+    }
+</ul>
+
+@Html.ActionLink("Tenant Details","TenantDetails", "Application", new{Model.ApplicationName, Model.Name }, null)

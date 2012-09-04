@@ -1,0 +1,39 @@
+﻿@using Simple.ApplicationAdmin.Contracts
+@model Simple.AplicationAdmin.Models.TenantDetailsModel
+
+@{
+    ViewBag.Title = "TenantDetails";
+}
+
+@if (Model != null)
+{
+
+    <h2>@Model.ApplicationName | @Model.Name</h2>
+
+    using (Html.BeginForm("UpdateTenantDetails", "Application", new { Model.ApplicationName, Model.Name }))
+    {
+    <h4>Status: @(Model.IsActive ? "Active" : "Inactive")</h4>
+
+    <fieldset>
+        <legend>Details</legend>
+        <label for="Url">Url</label>
+        @Html.TextBoxFor(m => m.Url)<input type="submit" value="Save" />
+    </fieldset>
+    }
+    
+    <h3>Database Configuration</h3>
+    <ul>
+        @foreach(var item in Model.Connections ?? Enumerable.Empty<DatabaseConfigurationInfo>())
+        {
+            <li>
+                <h5>@item.Name</h5>
+                
+                <div>@item.ConnectionString</div>
+            </li>
+        }
+    </ul>
+    <div>
+        @Html.ActionLink("Edit", "TenantDatabaseConfiguration", new{ Model.ApplicationName, Model.Name })
+    </div>
+    <h3>Application Configuration</h3>
+}
