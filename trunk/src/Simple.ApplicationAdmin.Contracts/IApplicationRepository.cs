@@ -11,6 +11,12 @@ namespace Simple.ApplicationAdmin.Contracts
     public interface IApplicationRepository
     {
         [OperationContract]
+        void AddApplicationTenant(string applicationName, string name, string url);
+
+        [OperationContract]
+        void DeleteApplicationTenant(string applicationName, string name);
+
+        [OperationContract]
         ApplicationInfo[] GetApplications();
 
         [OperationContract]
@@ -21,7 +27,7 @@ namespace Simple.ApplicationAdmin.Contracts
 
         [OperationContract]
         void UpdateTenantHeaderInfo(ApplicationTenantHeaderUpdateInfo tenantUpdateInfo);
-
+        
         [OperationContract]
         ApplicationTenantsResult GetApplicationTenants(ApplicationTenantsQuery query);
 
@@ -30,5 +36,8 @@ namespace Simple.ApplicationAdmin.Contracts
 
         [OperationContract]
         void UpdateTenantDatabaseConfiguration(string applicationName, string tenantName, DatabaseConfigurationInfo[] configuration);
+
+        [OperationContract]
+        void DeleteApplication(string name);
     }
 }

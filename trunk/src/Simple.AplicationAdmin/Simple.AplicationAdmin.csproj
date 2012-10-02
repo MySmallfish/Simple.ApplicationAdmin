@@ -232,6 +232,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <None Include="Properties\PublishProfiles\simplylogadmin - FTP.pubxml" />
+    <None Include="Properties\PublishProfiles\simplylogadmin - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-1.7.1.intellisense.js" />
     <Content Include="Scripts\jquery-1.7.1.js" />
     <Content Include="Scripts\jquery-1.7.1.min.js" />
@@ -247,7 +249,9 @@
     <Content Include="Scripts\knockout-2.1.0.debug.js" />
     <Content Include="Scripts\knockout-2.1.0.js" />
     <Content Include="Scripts\modernizr-2.5.3.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -289,6 +293,7 @@
     <Content Include="Views\Application\Tenants.cshtml" />
     <Content Include="Views\Application\TenantDetails.cshtml" />
     <Content Include="Views\Application\TenantDatabaseConfiguration.cshtml" />
+    <Content Include="Views\Application\Add.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -304,6 +309,10 @@
     <ProjectReference Include="..\Simple.ApplicationAdmin.Contracts\Simple.ApplicationAdmin.Contracts.csproj">
       <Project>{5e2646bd-a21f-480b-b171-900e72dece56}</Project>
       <Name>Simple.ApplicationAdmin.Contracts</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Simple.Utilities\Simple.Utilities.csproj">
+      <Project>{AEB215D2-4C15-4F03-AA5D-CCDCDE594CB1}</Project>
+      <Name>Simple.Utilities</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

@@ -13,6 +13,15 @@ namespace Simple.ApplicationAdmin.Contracts
         [OperationContract(IsOneWay = true)]
         void CreateApplication(string name);
 
+        [OperationContract(IsOneWay = true)]
+        void DeleteApplication(string name);
+
+        [OperationContract(IsOneWay = true)]
+        void AddApplicationTenant(string applicationName, string name, string url);
+        
+        [OperationContract(IsOneWay = true)]
+        void DeleteApplicationTenant(string applicationName, string name);
+
         [OperationContract]
         ApplicationInfo[] GetApplications();
 

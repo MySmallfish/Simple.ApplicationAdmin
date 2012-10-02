@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Simple.AplicationAdmin.Models;
 using Simple.ApplicationAdmin.Client;
 using Simple.ApplicationAdmin.Contracts;
+using Simple.Utilities;
 
 namespace Simple.AplicationAdmin.Controllers
 {
@@ -89,6 +90,7 @@ namespace Simple.AplicationAdmin.Controllers
 
         public ActionResult TenantDatabaseConfiguration(string applicationName, string name)
         {
+
             var tenantDetailsModel = GetTenantDetailsModel(applicationName, name);
             return View(tenantDetailsModel);
         }
@@ -96,6 +98,12 @@ namespace Simple.AplicationAdmin.Controllers
         [HttpPost]
         public ActionResult UpdateTenantDatabaseConfiguration(string applicationName, string name, DatabaseConfigurationInfo configurationInfo)
         {
+            Requires.ArgumentNotNullOrEmptyString(applicationName, "applicationName");
+            Requires.ArgumentNotNullOrEmptyString(name, "name");
+            Requires.ArgumentNotNull(configurationInfo, "configurationInfo");
+            Requires.ArgumentNotNull(configurationInfo.Name, "configurationInfo.Name");
+            Requires.ArgumentNotNull(configurationInfo.ConnectionString, "configurationInfo.ConnectionString");
+
             var client = new ApplicationManagerClient();
             client.UpdateDatabaseConfiguration(applicationName, name, configurationInfo);
             return RedirectToAction("TenantDatabaseConfiguration", new { applicationName, name });
@@ -104,6 +112,12 @@ namespace Simple.AplicationAdmin.Controllers
         [HttpPost]
         public ActionResult AddTenantDatabaseConfiguration(string applicationName, string name, DatabaseConfigurationInfo configurationInfo)
         {
+            Requires.ArgumentNotNullOrEmptyString(applicationName, "applicationName");
+            Requires.ArgumentNotNullOrEmptyString(name, "name");
+            Requires.ArgumentNotNull(configurationInfo, "configurationInfo");
+            Requires.ArgumentNotNull(configurationInfo.Name, "configurationInfo.Name");
+            Requires.ArgumentNotNull(configurationInfo.ConnectionString, "configurationInfo.ConnectionString");
+
             var client = new ApplicationManagerClient();
             client.AddDatabaseConfiguration(applicationName, name, configurationInfo);
 
@@ -113,10 +127,61 @@ namespace Simple.AplicationAdmin.Controllers
         [HttpPost]
         public ActionResult DeleteTenantDatabaseConfiguration(string applicationName, string name, string configurationname)
         {
+            Requires.ArgumentNotNullOrEmptyString(applicationName, "applicationName");
+            Requires.ArgumentNotNullOrEmptyString(name, "name");
+            Requires.ArgumentNotNullOrEmptyString(configurationname, "configurationname");
+
             var client = new ApplicationManagerClient();
             client.RemoveDatabaseConfiguration(applicationName, name, configurationname);
 
             return RedirectToAction("TenantDatabaseConfiguration", new { applicationName, name });
+        }
+
+        public ActionResult Add()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Delete(string name)
+        {
+            Requires.ArgumentNotNullOrEmptyString(name, "name");
+
+            var client = new ApplicationManagerClient();
+            client.DeleteApplication(name);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult Add(string name)
+        {
+            Requires.ArgumentNotNullOrEmptyString(name, "name");
+
+            var client = new ApplicationManagerClient();
+            client.CreateApplication(name);
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public ActionResult DeleteTenant(string applicationName, string name)
+        {
+            Requires.ArgumentNotNullOrEmptyString(applicationName, "applicationName");
+            Requires.ArgumentNotNullOrEmptyString(name, "name");
+
+            var client = new ApplicationManagerClient();
+            client.DeleteApplicationTenant(applicationName, name);
+            return RedirectToAction("Tenants", new { applicationName });
+        }
+
+        [HttpPost]
+        public ActionResult AddTenant(string applicationName, string name, string url)
+        {
+            Requires.ArgumentNotNullOrEmptyString(applicationName, "applicationName");
+            Requires.ArgumentNotNullOrEmptyString(name, "name");
+            Requires.ArgumentNotNullOrEmptyString(url, "url");
+
+            var client = new ApplicationManagerClient();
+            client.AddApplicationTenant(applicationName, name, url);
+            return RedirectToAction("Tenants", new { applicationName });
         }
     }
 }

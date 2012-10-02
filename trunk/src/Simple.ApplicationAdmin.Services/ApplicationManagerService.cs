@@ -19,16 +19,7 @@ namespace Simple.ApplicationAdmin.Services
             applicationInfo.Name = name;
             applicationInfo.CreatedAt = DateTime.UtcNow;
 
-            var repositoryService = InProcFactory.CreateInstance<ApplicationRepositoryService, IApplicationRepository>();
-            try
-            {
-                repositoryService.CreateApplication(applicationInfo);
-            }
-            finally
-            {
-                InProcFactory.CloseProxy(repositoryService);
-            }
-
+            UseRepository(repositoryService=>repositoryService.CreateApplication(applicationInfo));
         }
 
 
@@ -220,6 +211,23 @@ namespace Simple.ApplicationAdmin.Services
                         }
                     });
             return result.ToArray();
+        }
+
+
+        public void DeleteApplication(string name)
+        {
+            UseRepository(repositoryService => repositoryService.DeleteApplication(name));
+        }
+
+
+        public void AddApplicationTenant(string applicationName, string name, string url)
+        {
+            UseRepository(repositoryService=>repositoryService.AddApplicationTenant(applicationName, name, url));
+        }
+
+        public void DeleteApplicationTenant(string applicationName, string name)
+        {
+            UseRepository(repositoryService => repositoryService.DeleteApplicationTenant(applicationName, name));
         }
     }
 }

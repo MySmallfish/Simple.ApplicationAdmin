@@ -15,6 +15,7 @@
     </section>
 }
 <h3>Applications:</h3>
+@Html.ActionLink("Add New Application", "Add", "Application")
 <ul>
     @foreach(var application in Model){
     <li>
@@ -22,6 +23,16 @@
         <h5>Tenants: @application.TenantsCount</h5>
         <br />
         @Html.ActionLink("Tenants", "Tenants", "Application", new { applicationName = application.Name }, null)
+        @if (application.TenantsCount == 0)
+        {
+            
+            <div>
+                @using(Html.BeginForm("Delete", "Application", new{ application.Name}))
+                {
+                    <input type="submit" value="Delete"/>
+                }
+            </div>
+        }
     </li>
     }
 </ul>

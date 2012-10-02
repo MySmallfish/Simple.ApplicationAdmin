@@ -74,5 +74,21 @@ namespace Simple.ApplicationAdmin.Client
         {
             Channel.UpdateDatabaseConfiguration(applicationName, tenantName, configurationInfo);
         }
+
+
+        public void DeleteApplication(string name)
+        {
+            Channel.DeleteApplication(name);
+        }
+
+        public void AddApplicationTenant(string applicationName, string name, string url)
+        {
+            Channel.AddApplicationTenant(applicationName, name, url);
+        }
+
+        public void DeleteApplicationTenant(string applicationName, string name)
+        {
+            Channel.DeleteApplicationTenant(applicationName,name);
+        }
     }
 }

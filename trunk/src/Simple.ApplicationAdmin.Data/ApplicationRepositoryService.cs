@@ -92,8 +92,8 @@ namespace Simple.ApplicationAdmin.Data
                                    var dataTenant =
                                        dataContext.ApplicationTenants.FirstOrDefault(
                                            t => t.Application == applicationName && t.TenantName == tenantName);
-                                    
-                                   if(dataTenant != null)
+
+                                   if (dataTenant != null)
                                    {
                                        result = MapDataApplicationTenant(dataTenant);
                                    }
@@ -172,6 +172,67 @@ namespace Simple.ApplicationAdmin.Data
                                });
 
             return configuration.ToArray();
+        }
+
+
+        public void DeleteApplication(string name)
+        {
+            UseDataContext(
+                dataSource =>
+                {
+                    var application = dataSource.Applications.FirstOrDefault(app => app.Name == name);
+                    if (application != null)
+                    {
+                        if (application.ApplicationTenants.Any())
+                        {
+                            throw new ApplicationException(string.Format("Application {0} still contains tenants.", name));
+                        }
+                        dataSource.Applications.DeleteOnSubmit(application);
+                    }
+
+                    dataSource.SubmitChanges();
+                });
+        }
+
+        public void AddApplicationTenant(string applicationName, string name, string url)
+        {
+            UseDataContext(
+                dataSource =>
+                {
+                    if (dataSource.ApplicationTenants.Any(t => t.Application == applicationName && t.TenantName == name))
+                    {
+                        throw new ArgumentException(string.Format("Tenant {0} already exist in application {1}.",
+                                                                  name, applicationName));
+                    }
+
+                    var tenant = new ApplicationTenant();
+                    tenant.TenantName = name;
+                    tenant.Url = url;
+                    tenant.Application = applicationName;
+                    tenant.IsActive = true;
+
+                    dataSource.ApplicationTenants.InsertOnSubmit(tenant);
+
+                    dataSource.SubmitChanges();
+                });
+        }
+
+        public void DeleteApplicationTenant(string applicationName, string name)
+        {
+            UseDataContext(dataSource =>
+                               {
+                                   var tenant =
+                                       dataSource.ApplicationTenants.FirstOrDefault(
+                                           t => t.Application == applicationName && t.TenantName == name);
+                                   if (tenant == null)
+                                   {
+                                       throw new ArgumentException(string.Format("Tenant {0} does not exist on application {1}.", name, applicationName));
+                                   }
+
+                                   dataSource.ApplicationTenants.DeleteOnSubmit(tenant);
+
+                                   dataSource.SubmitChanges();
+                               });
         }
     }
 }

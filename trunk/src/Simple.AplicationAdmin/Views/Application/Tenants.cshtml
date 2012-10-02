@@ -4,14 +4,28 @@
 }
 
 <h2>@Model.ApplicationName Tenants</h2>
-
+<h3>Add Tenant</h3>
+@using (Html.BeginForm("AddTenant", "Application", new { Model.ApplicationName }))
+{
+    <fieldset>
+        <legend>Create New Tenant</legend>
+        <label for="Name">Name</label>
+        @Html.TextBox("Name")
+        <br />
+        <label for="Url">Url</label>
+        @Html.TextBox("Url")
+        <br />
+        <input type="submit" value="Add" />
+    </fieldset>    
+}
+<h3>Existing Tenants</h3>
 <table>
     <thead>
         <tr>
-            <th>Name</th>
-            <th>Url</th>
-            <th>Active?</th>
-            <th>Contracted?</th>
+            <th width="20%">Name</th>
+            <th width="20%">Url</th>
+            <th width="20%">Active?</th>
+            <th width="20%">Contracted?</th>
         </tr>
     </thead>
     <tbody>
@@ -20,10 +34,15 @@
             <tr>
                 <td>@tenant.Name</td>
                 <td>@tenant.Url</td>
-                <td>@tenant.IsActive @((tenant.IsActive? Html.ActionLink("Deactivate", "DeactivateTenant",new{name=tenant.Name, applicationName=Model.ApplicationName}):Html.ActionLink("Activate", "ActivateTenant",new{name=tenant.Name, applicationName=Model.ApplicationName})))</td>
+                <td>@tenant.IsActive @((tenant.IsActive ? Html.ActionLink("Deactivate", "DeactivateTenant", new { name = tenant.Name, applicationName = Model.ApplicationName }) : Html.ActionLink("Activate", "ActivateTenant", new { name = tenant.Name, applicationName = Model.ApplicationName })))</td>
                 <td>@tenant.InContract</td>
-                <td>@Html.ActionLink("Details","TenantDetails",new{name=tenant.Name, applicationName=Model.ApplicationName})</td>
-            
+                <td>@Html.ActionLink("Details", "TenantDetails", new { name = tenant.Name, applicationName = Model.ApplicationName })</td>
+                <td>
+                    @using (Html.BeginForm("DeleteTenant", "Application", new { Model.ApplicationName, tenant.Name }))
+                    {
+                        <input type="submit" value="Delete" />
+                    }
+                </td>
             </tr>
         }
     </tbody>
